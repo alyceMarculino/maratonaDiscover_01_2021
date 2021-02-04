@@ -1,28 +1,17 @@
-document.addEventListener('keydown', function(event){
-    const isEscPress = event.key === 'Escape'
-
-    if(isEscPress){
-        Modal.close()
-    }
-})
-
 const Modal = {
-    open(){
-        // Abrir modal
-        // Adicionar a class active ao modal
-        document
-            .querySelector('.modal-overlay')
-            .classList
-            .add('active')
-
-    },
-    close(){
-        // fechar o modal
-        // remover a class active do modal
-        document
-            .querySelector('.modal-overlay')
-            .classList
-            .remove('active')
+    abrirFechar(){
+        let element = document.querySelector('.modal-overlay')
+        element.classList.toggle('active')
+        
+        if (element.className === 'modal-overlay active'){
+            document.addEventListener('keydown', function(event){
+                const isEscPress = event.key === 'Escape'
+            
+                if(isEscPress){
+                    element.classList.remove('active')
+                }
+            })
+        }
     }
 }
 
