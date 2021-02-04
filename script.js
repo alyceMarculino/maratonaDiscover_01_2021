@@ -1,3 +1,11 @@
+document.addEventListener('keydown', function(event){
+    const isEscPress = event.key === 'Escape'
+
+    if(isEscPress){
+        Modal.close()
+    }
+})
+
 const Modal = {
     open(){
         // Abrir modal
