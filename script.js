@@ -16,8 +16,7 @@ const Modal = {
 }
 
 const Storage = {
-    get() {
-        console.log(localStorage.getItem("dev.finances:transactions"))
+    get(){
         return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
     },
 
@@ -190,7 +189,7 @@ const Form = {
             const transaction = Form.formatValues()
             Transaction.add(transaction)
             Form.clearFields()
-            Modal.close()
+            Modal.abrirFechar()
         } catch (error) {
             alert(error.message)
         }
