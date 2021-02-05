@@ -1,13 +1,13 @@
 const Modal = {
-    abrirFechar(){
+    abrirFechar() {
         let element = document.querySelector('.modal-overlay')
         element.classList.toggle('active')
-        
-        if (element.className === 'modal-overlay active'){
-            document.addEventListener('keydown', function(event){
+
+        if (element.className === 'modal-overlay active') {
+            document.addEventListener('keydown', function (event) {
                 const isEscPress = event.key === 'Escape'
-            
-                if(isEscPress){
+
+                if (isEscPress) {
                     element.classList.remove('active')
                 }
             })
@@ -16,7 +16,7 @@ const Modal = {
 }
 
 const Storage = {
-    get(){
+    get() {
         return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
     },
 
@@ -28,7 +28,7 @@ const Storage = {
 const Transaction = {
     all: Storage.get(),
 
-    add(transaction){
+    add(transaction) {
         Transaction.all.push(transaction)
 
         App.reload()
@@ -43,7 +43,7 @@ const Transaction = {
     incomes() {
         let income = 0;
         Transaction.all.forEach(transaction => {
-            if( transaction.amount > 0 ) {
+            if (transaction.amount > 0) {
                 income += transaction.amount;
             }
         })
@@ -53,7 +53,7 @@ const Transaction = {
     expenses() {
         let expense = 0;
         Transaction.all.forEach(transaction => {
-            if( transaction.amount < 0 ) {
+            if (transaction.amount < 0) {
                 expense += transaction.amount;
             }
         })
@@ -111,10 +111,10 @@ const DOM = {
 }
 
 const Utils = {
-    formatAmount(value){
-        value = Number(value.replace(/\,\./g, "")) * 100
-        
-        return value
+    formatAmount(value) {
+        value = value * 100
+
+        return Math.round(value)
     },
 
     formatDate(date) {
@@ -134,7 +134,7 @@ const Utils = {
             currency: "BRL"
         })
 
-       return signal + value
+        return signal + value
     }
 }
 
@@ -153,17 +153,17 @@ const Form = {
 
     validateFields() {
         const { description, amount, date } = Form.getValues()
-        
-        if( description.trim() === "" || 
-            amount.trim() === "" || 
-            date.trim() === "" ) {
-                throw new Error("Por favor, preencha todos os campos")
+
+        if (description.trim() === "" ||
+            amount.trim() === "" ||
+            date.trim() === "") {
+            throw new Error("Por favor, preencha todos os campos")
         }
     },
 
     formatValues() {
         let { description, amount, date } = Form.getValues()
-        
+
         amount = Utils.formatAmount(amount)
 
         date = Utils.formatDate(date)
@@ -199,7 +199,7 @@ const Form = {
 const App = {
     init() {
         Transaction.all.forEach(DOM.addTransaction)
-        
+
         DOM.updateBalance()
 
         Storage.set(Transaction.all)
